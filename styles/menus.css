@@ -1,0 +1,116 @@
+.imageEditMenu {
+    position: absolute;
+    display: none;
+    background-color: rgb(153, 153, 153);
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    border-radius: 10px;
+}
+.imageEditMenu button {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.openButton {
+    background-color: transparent;
+    font-size: 1.5em;
+    color: rgb(43, 43, 43);
+    cursor: pointer;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: #82afb3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow .1s, transform .2s !important;
+    position: absolute;
+    bottom: 0;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+
+}
+.openButton:hover {
+    box-shadow: 0 0 15px 2px rgb(46, 46, 46);
+}
+.openButton:focus {
+    outline: 0;
+}
+.menu.menuOpen .openButton {
+    transform: rotate(45deg) !important;
+}
+.menu.menuOpen .openButton:hover {
+    box-shadow: none;
+}
+.openButton.openAddToEditor {
+    right: 0;
+}
+.openButton.openSettings {
+    left: 0;
+}
+
+
+.div__settings {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+.div__addToEditor {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    
+}
+
+/* Menu styling when closed */
+.menu {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: .3s;
+    opacity: 1;
+}
+.menu .menuContent {
+    opacity: 0;
+    transform: translateY(-30px);
+    visibility: hidden;
+}
+/* ______________________________ */
+
+
+
+
+
+
+.menu.menuOpen {
+    width: 300px;
+    height: 400px;
+    background-color: #82afb3;
+    padding: 10px;
+    border-radius: 20px;
+    opacity: 1;
+}
+.menu.menuOpen .menuContent {
+    transition: .2s;
+    transition-delay: .3s;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+div.menu.menuOpen .menuContent .menuItem {
+    transition: .15s;
+    transition-delay: 0s;
+    padding: 10px 10px;
+    background-color: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 20px;
+}
+div.menu.menuOpen .menuContent .menuItem:hover {
+    transition-delay: 0s;
+    background-color: rgba(97, 97, 97, 0.185);
+}

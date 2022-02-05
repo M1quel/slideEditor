@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/69046e919d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="editor">
+        <div class="editorContentWrapper">
+
+        </div>
+        <div class="div__settings menu">
+            <button class="openSettings openButton"><i class="fas fa-cog"></i></button>
+        </div>
+        <div class="div__addToEditor menu menuOpen">
+            <button class="openAddToEditor openButton"><i class="fas fa-plus"></i></button>
+            <div class="menuContent">
+                <li class="menuItem" onclick="handleAdd(this)" type="text">
+                    Tekst
+                </li>
+                <li class="menuItem" onclick="handleAdd(this)" type="image">
+                    Billede
+                </li>
+                <li class="menuItem">
+                    Det her er menuen
+                </li>
+            </div>
+        </div>
+        <div class="imageEditMenu">
+            <button>
+                Hej
+            </button>
+            <button>
+                med
+            </button>
+            <button>
+                dig
+            </button>
+        </div>
+    </section>
+
+    <script defer src="script.js"></script>
+</body>
+</html>

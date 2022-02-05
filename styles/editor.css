@@ -20,3 +20,13 @@
     position: absolute;
     display: none;
 }
+.editor .handle .handleCorner {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: black;
+    z-index: 999;
+    right: -4px;
+    bottom: -4px;
+    cursor: nwse-resize;
+}

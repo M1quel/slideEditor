@@ -22,6 +22,7 @@ for (let i = 0; i < openButtons.length; i++) {
 
 
 function handleAdd(elem) {
+    document.getElementsByClassName("menuOpen")[0].classList.remove("menuOpen")
     let addType = elem.getAttribute("type");
     let tempElem;
     if (addType == "image") {
@@ -42,7 +43,6 @@ editorContentContainer.addEventListener("click", function (e) {
     let target = e.target;
 
     if (target.classList.contains("editorContentWrapper")) {
-        console.log("Det var editoren");
         handle.style.display = "none";
         imageEditMenu.style.display = "none";
         return;
@@ -73,6 +73,9 @@ function setHandle (elem) {
 }
 
 handle.addEventListener("mousedown", function (e) {
+    if (e.target.classList.contains("handleCorner")) {
+        return;
+    }
     let handleBounding = handle.getBoundingClientRect();
     handleLayer = {
         x: e.clientX - (handleBounding.left - editorBounding.left),
@@ -104,8 +107,6 @@ function handleMove(e) {
         x: e.clientX,
         y: e.clientY
     }
-    console.log(values, handleLayer)
-    console.log(parseInt(values.x) - parseInt(handleLayer.x))
 
     handle.style.left = (parseInt(values.x) - parseInt(handleLayer.x)) + "px";
     handle.style.top = (parseInt(values.y) - parseInt(handleLayer.y)) + "px";
@@ -113,3 +114,66 @@ function handleMove(e) {
     currentEditElem.style.top = (parseInt(values.y) - parseInt(handleLayer.y)) + "px";
 
 }
+
+
+
+
+// RESIZE IMAGES
+var knob = document.querySelector("div.handleCorner");
+var mouseStartPosition = {
+    x: 0,
+    y: 0
+}
+var resize_direction;
+var resize_point = {
+    x: 0,
+    y: 0
+};
+    
+knob.addEventListener("mousedown", function (e) {
+    let corner = e.currentTarget.dataset.position;
+    console.log(corner)
+    let currentEditElemBounding = currentEditElem.getBoundingClientRect();
+    mouseStartPosition = {
+        x: e.clientX - editorBounding.left,
+        y: e.clientY - editorBounding.top
+    }
+
+
+    if (currentEditElem.getAttribute("edittype") == "image") {
+        imageEditMenu.style.display = "none";
+    } else if (currentEditElem.getAttribute("edittype") == "text") {
+        // display none text edit menu
+    }
+
+    knob.addEventListener("mousemove", moveKnob);
+});
+knob.addEventListener("mouseup", function (e) {
+    knob.removeEventListener("mousemove", moveKnob);
+    if (currentEditElem.getAttribute("edittype") == "image") {
+        imageEditMenu.style.display = "flex";
+    } else if (currentEditElem.getAttribute("edittype") == "text") {
+        // display none text edit menu
+    }
+});
+
+
+function moveKnob (e) {
+    let position = {
+        x: (e.clientX - editorBounding.left),
+        y: (e.clientY - editorBounding.top)
+    }
+    let newDimentions = {
+        width: Math.abs(position.x - resize_point.x),
+        height: Math.abs(position.y - resize_point.y)
+    }
+    console.log("moving")
+    currentEditElem.style.width = newDimentions.width + "px";
+    currentEditElem.style.height = newDimentions.height + "px";
+    handle.style.width = newDimentions.width + "px";
+    handle.style.height = newDimentions.height + "px";
+
+}
+
+
+// _____________________

@@ -11,12 +11,11 @@
 <body>
     <section class="editor">
         <div class="editorContentWrapper">
-
         </div>
         <div class="div__settings menu">
             <button class="openSettings openButton"><i class="fas fa-cog"></i></button>
         </div>
-        <div class="div__addToEditor menu menuOpen">
+        <div class="div__addToEditor menu">
             <button class="openAddToEditor openButton"><i class="fas fa-plus"></i></button>
             <div class="menuContent">
                 <li class="menuItem" onclick="handleAdd(this)" type="text">
@@ -30,15 +29,26 @@
                 </li>
             </div>
         </div>
-        <div class="imageEditMenu">
-            <button>
-                Hej
-            </button>
+        <div class="imageEditMenu editMenu">
+            <div class="editDropdown">
+                <button onclick='toggleDropdown(this, "linkDropdown")'>
+                    <i class="fas fa-link"></i>
+                </button>
+                <div class="editDropdownContent linkDropdown hideEditDropdown">
+                    <input id="editLink" type="link" placeholder="link til billede">
+                    <button onclick="handleSaveLink(this)">
+                        Gem
+                    </button>
+                    <button>
+                        annuller
+                    </button>
+                </div>
+            </div>
             <button>
                 med
             </button>
-            <button>
-                dig
+            <button onclick="removeCurrentElem()">
+                <i class="fas fa-trash"></i>
             </button>
         </div>
         <div class="handle">

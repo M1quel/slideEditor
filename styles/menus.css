@@ -72,6 +72,8 @@
     border-radius: 50%;
     transition: .3s;
     opacity: 1;
+    z-index: 999;
+
 }
 .menu .menuContent {
     opacity: 0;
@@ -114,3 +116,44 @@ div.menu.menuOpen .menuContent .menuItem:hover {
     transition-delay: 0s;
     background-color: rgba(97, 97, 97, 0.185);
 }
+
+
+
+
+
+
+/* Edit menu */
+
+    .editMenu {
+
+    }
+    .editMenu button {
+        cursor: pointer;
+    }
+
+    /* editDropdown */
+        .editDropdown {
+        }
+
+        .editDropdownContent {
+            position: absolute;
+            top: 110%;
+            background-color: rgb(153, 153, 153);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        .editDropdownContent input {
+            border-radius: 5px;
+            padding-left: 5px;
+        }
+        .hideEditDropdown {
+            display: none;
+        }
+
+    /* _____________________ */
+
+
+
+/* ______________________ */

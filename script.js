@@ -1,7 +1,8 @@
 var openButtons = document.querySelectorAll("button.openButton");
 var editorContainer = document.querySelector("section.editor");
-var editorContentContainer = document.querySelector("section.editor .editorContentWrapper")
+var editorContentContainer = document.querySelector("section.editor .editorContentWrapper");
 var imageEditMenu = document.querySelector("div.imageEditMenu");
+var editorMoveField = document.querySelector("div.editorMoveField");
 var currentEditElem;
 var handle = document.querySelector("div.handle");
 var handleLayer = {
@@ -28,6 +29,13 @@ function handleAdd(elem) {
     if (addType == "image") {
         tempElem = document.createElement("img")
         tempElem.src = "https://via.placeholder.com/100";
+        tempElem.style.height = "100px";
+        tempElem.style.width = "100px";
+        tempElem.style.objectFit = "contain";
+        tempElem.onerror = function (event) {
+            event.target.src = "https://via.placeholder.com/100";
+            setHandle(currentEditElem);
+        }
         tempElem.setAttribute("editType", "image")
     }
     if (addType == "text") {
@@ -83,6 +91,7 @@ handle.addEventListener("mousedown", function (e) {
     }
     handle.style.cursor = "grabbing";
     handle.addEventListener("mousemove", handleMove);
+    editorContentContainer.addEventListener("mousemove", handleMove);
     if (currentEditElem.getAttribute("edittype") == "image") {
         imageEditMenu.style.display = "none";
     } else if (currentEditElem.getAttribute("edittype") == "text") {
@@ -91,6 +100,7 @@ handle.addEventListener("mousedown", function (e) {
 })
 handle.addEventListener("mouseup", function (e) {
     handle.removeEventListener("mousemove", handleMove);
+    editorContentContainer.removeEventListener("mousemove", handleMove);
     let newBounding = currentEditElem.getBoundingClientRect()
     if(currentEditElem.getAttribute("edittype") == "image") {
         imageEditMenu.style.left = newBounding.left - editorBounding.left + 10 + "px";
@@ -131,12 +141,14 @@ var resize_point = {
 };
     
 knob.addEventListener("mousedown", function (e) {
-    let corner = e.currentTarget.dataset.position;
-    console.log(corner)
     let currentEditElemBounding = currentEditElem.getBoundingClientRect();
     mouseStartPosition = {
         x: e.clientX - editorBounding.left,
         y: e.clientY - editorBounding.top
+    }
+    resize_point = {
+        x: currentEditElemBounding.left - editorBounding.left,
+        y: currentEditElemBounding.top - editorBounding.top
     }
 
 
@@ -147,9 +159,13 @@ knob.addEventListener("mousedown", function (e) {
     }
 
     knob.addEventListener("mousemove", moveKnob);
+    editorContentContainer.addEventListener("mousemove", moveKnob);
+    handle.addEventListener("mousemove", moveKnob);
 });
 knob.addEventListener("mouseup", function (e) {
     knob.removeEventListener("mousemove", moveKnob);
+    editorContentContainer.removeEventListener("mousemove", moveKnob);
+    handle.removeEventListener("mousemove", moveKnob);
     if (currentEditElem.getAttribute("edittype") == "image") {
         imageEditMenu.style.display = "flex";
     } else if (currentEditElem.getAttribute("edittype") == "text") {
@@ -167,7 +183,6 @@ function moveKnob (e) {
         width: Math.abs(position.x - resize_point.x),
         height: Math.abs(position.y - resize_point.y)
     }
-    console.log("moving")
     currentEditElem.style.width = newDimentions.width + "px";
     currentEditElem.style.height = newDimentions.height + "px";
     handle.style.width = newDimentions.width + "px";
@@ -177,3 +192,34 @@ function moveKnob (e) {
 
 
 // _____________________
+
+
+
+
+
+function removeCurrentElem () {
+    if (currentEditElem) {
+        if (currentEditElem.getAttribute("edittype") == "image") {
+            imageEditMenu.style.display = "none";
+        }
+        handle.style.display = "none";
+        currentEditElem.remove();
+
+    }
+}
+
+
+
+
+
+function toggleDropdown (elem, elemClass) {
+    let dropdown = elem.parentElement.querySelector(`.${elemClass}`);
+    dropdown.classList.toggle("hideEditDropdown");
+}
+
+function handleSaveLink (elem) {
+    let link = elem.parentElement.querySelector("#editLink").value;
+    if (!link || link == "") return;
+    currentEditElem.src = link;
+    elem.parentElement.classList.toggle("hideEditDropdown");
+}

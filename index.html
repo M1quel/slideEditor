@@ -39,13 +39,24 @@
                     <button onclick="handleSaveLink(this)">
                         Gem
                     </button>
-                    <button>
+                    <button onclick="closeDropdown(this)">
                         annuller
                     </button>
                 </div>
             </div>
+            <button onclick="removeCurrentElem()">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <textarea class="textEditor" style="display: none; resize: none" name="textEditor" id="textEditor"></textarea>
+        <div class="textEditorMenu editMenu">
             <button>
-                med
+                <i class="fas fa-check"></i>
+            </button>
+        </div>
+        <div class="textEditMenu editMenu">
+            <button onclick='startEditText()'>
+                <i class="fas fa-edit"></i>
             </button>
             <button onclick="removeCurrentElem()">
                 <i class="fas fa-trash"></i>

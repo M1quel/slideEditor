@@ -1,16 +1,3 @@
-.imageEditMenu {
-    position: absolute;
-    display: none;
-    background-color: rgb(153, 153, 153);
-    padding: 10px;
-    display: flex;
-    gap: 5px;
-    border-radius: 10px;
-}
-.imageEditMenu button {
-    padding: 5px;
-    border-radius: 5px;
-}
 
 
 .openButton {
@@ -125,10 +112,18 @@ div.menu.menuOpen .menuContent .menuItem:hover {
 /* Edit menu */
 
     .editMenu {
-
+        position: absolute;
+        display: none;
+        background-color: rgb(153, 153, 153);
+        padding: 10px;
+        display: flex;
+        gap: 5px;
+        border-radius: 10px;
     }
     .editMenu button {
         cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
     }
 
     /* editDropdown */

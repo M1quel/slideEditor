@@ -30,3 +30,8 @@
     bottom: -4px;
     cursor: nwse-resize;
 }
+
+.editor .textEditor {
+    position: absolute;
+    z-index: 9999999;
+}

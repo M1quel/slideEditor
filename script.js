@@ -2,18 +2,22 @@ var openButtons = document.querySelectorAll("button.openButton");
 var editorContainer = document.querySelector("section.editor");
 var editorContentContainer = document.querySelector("section.editor .editorContentWrapper");
 var imageEditMenu = document.querySelector("div.imageEditMenu");
+var textEditMenu = document.querySelector("div.textEditMenu");
 var editorMoveField = document.querySelector("div.editorMoveField");
+var textEditor = document.querySelector("textarea.textEditor");
+var textEditorMenu = document.querySelector("div.textEditorMenu");
 var currentEditElem;
 var handle = document.querySelector("div.handle");
+var editMode = false;
 var handleLayer = {
     x: 0,
     y: 0
 }
-
-
-
 let editorBounding = editorContentContainer.getBoundingClientRect();
 var mouseDownData = {};
+
+
+
 for (let i = 0; i < openButtons.length; i++) {
     let item = openButtons[i];
     item.addEventListener("click", function (e) {
@@ -53,6 +57,7 @@ editorContentContainer.addEventListener("click", function (e) {
     if (target.classList.contains("editorContentWrapper")) {
         handle.style.display = "none";
         imageEditMenu.style.display = "none";
+        textEditMenu.style.display = "none";
         return;
     }
     currentEditElem = target;
@@ -62,9 +67,11 @@ editorContentContainer.addEventListener("click", function (e) {
         imageEditMenu.style.top = targetBounding.bottom - editorBounding.top + 10 + "px";
         imageEditMenu.style.display = "flex";
         setHandle(currentEditElem);
-       
-
-
+    } else if (target.getAttribute("edittype") == "text") {
+        textEditMenu.style.left = targetBounding.left - editorBounding.left + 10 + "px";
+        textEditMenu.style.top = targetBounding.bottom - editorBounding.top + 10 + "px";
+        textEditMenu.style.display = "flex";
+        setHandle(currentEditElem);
     }
 })
 
@@ -95,7 +102,7 @@ handle.addEventListener("mousedown", function (e) {
     if (currentEditElem.getAttribute("edittype") == "image") {
         imageEditMenu.style.display = "none";
     } else if (currentEditElem.getAttribute("edittype") == "text") {
-        // display none text edit menu
+        textEditMenu.style.display = "none";
     }
 })
 handle.addEventListener("mouseup", function (e) {
@@ -106,6 +113,10 @@ handle.addEventListener("mouseup", function (e) {
         imageEditMenu.style.left = newBounding.left - editorBounding.left + 10 + "px";
         imageEditMenu.style.top = newBounding.bottom - editorBounding.top + 10 + "px";
         imageEditMenu.style.display = "flex";
+    }else if(currentEditElem.getAttribute("edittype") == "text") {
+        textEditMenu.style.left = newBounding.left - editorBounding.left + 10 + "px";
+        textEditMenu.style.top = newBounding.bottom - editorBounding.top + 10 + "px";
+        textEditMenu.style.display = "flex";
     }
     handle.style.cursor = "grab";
     handleLayer = {}
@@ -198,9 +209,13 @@ function moveKnob (e) {
 
 
 function removeCurrentElem () {
+    console.log(currentEditElem.getAttribute("edittype"));
     if (currentEditElem) {
         if (currentEditElem.getAttribute("edittype") == "image") {
             imageEditMenu.style.display = "none";
+        } else if (currentEditElem.getAttribute("edittype") == "text") {
+            console.log("Den kommer herind")
+            textEditMenu.style.display = "none";
         }
         handle.style.display = "none";
         currentEditElem.remove();
@@ -217,9 +232,34 @@ function toggleDropdown (elem, elemClass) {
     dropdown.classList.toggle("hideEditDropdown");
 }
 
+function closeDropdown (elem) {
+    let dropdown = elem.parentElement.classList.toggle("hideEditDropdown");
+}
+
 function handleSaveLink (elem) {
     let link = elem.parentElement.querySelector("#editLink").value;
     if (!link || link == "") return;
     currentEditElem.src = link;
     elem.parentElement.classList.toggle("hideEditDropdown");
+}
+
+
+
+
+function startEditText() {
+    handle.style.display = "none";
+    textEditMenu.style.display = "none";
+
+    let holdValue = currentEditElem.innerText;
+    let elemBounding = currentEditElem.getBoundingClientRect();
+    textEditor.style.display = "block";
+    textEditor.style.left = (elemBounding.left - editorBounding.left) + "px";
+    textEditor.style.top = (elemBounding.top - editorBounding.top) + "px";
+    textEditor.style.width = elemBounding.width + "px";
+    textEditor.style.height = elemBounding.height + "px";
+    textEditor.innerText = holdValue;
+    textEditorMenu.style.display = "block";
+    textEditorMenu.style.left = (elemBounding.left - editorBounding.left) + 10 + "px";
+    textEditorMenu.style.top = (elemBounding.bottom - editorBounding.top) + 10 + "px";
+
 }
